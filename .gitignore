@@ -8,5 +8,10 @@ node_modules/
 /playwright/.auth/
 /playwright/.bodyRequest/
 /playwright/.bodyResponse/
-*.txt
+/test-report-fromGitHub/
+/.claude/
+/screeshots/
+/codeReviewFeedback
+*.spec.ts.txt
+MEMORY.md
 .env

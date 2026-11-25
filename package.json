@@ -3,7 +3,17 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "playwright test",
+    "test:api": "playwright test --project api",
+    "test:chromium": "playwright test --project chromium",
+    "test:firefox": "playwright test --project firefox",
+    "test:trace": "playwright test --project firefox --trace on",
+    "test:headed": "playwright test --headed",
+    "test:headed:Chromium": "playwright test --project chromium --headed",
+    "typecheck": "tsc --noEmit",
+    "report": "playwright show-report --port 9400"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
