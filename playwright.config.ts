@@ -8,6 +8,8 @@ import dotenv from 'dotenv';
 import path from 'path';
 dotenv.config({ path: path.resolve(__dirname, '.env') });
 
+const slowMoValue = process.env.CI ? 0 : 1000;
+
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
@@ -39,11 +41,22 @@ export default defineConfig({
       testMatch: '**/*.setup.ts'      
     },
     {
+      name: 'api',
+      testMatch: '**/api.spec.ts',
+      use: {
+        baseURL: 'https://reqres.in',
+        extraHTTPHeaders: {
+          'x-api-key': process.env.REQRES_API_KEY ?? '',
+        },
+      },
+    },
+    {
       name: 'chromium',
+      testIgnore: '**/api.spec.ts',
       use: { 
         ...devices['Desktop Chrome'],
         launchOptions: {
-          slowMo: 1000,
+          slowMo: slowMoValue,
         },
         storageState: 'playwright/.auth/user.json',
        },
@@ -52,10 +65,11 @@ export default defineConfig({
 
     {
       name: 'firefox',
+      testIgnore: '**/api.spec.ts',
       use: { 
         ...devices['Desktop Firefox'],
         launchOptions: {
-          slowMo: 1000,
+          slowMo: slowMoValue,
         },
         storageState: 'playwright/.auth/user.json',
        },
@@ -64,10 +78,11 @@ export default defineConfig({
 
     {
       name: 'webkit',
+      testIgnore: '**/api.spec.ts',
       use: { 
         ...devices['Desktop Safari'],
         launchOptions: {
-          slowMo: 1000,
+          slowMo: slowMoValue,
         },
         storageState: 'playwright/.auth/user.json',
        },
