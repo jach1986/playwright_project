@@ -8,3 +8,5 @@ test('Test 1: Simulate a flaky test that passes on retry', async ({}, testInfo) 
     });
     expect(testInfo.retry).toBe(1);
 });
+
+///adding this line to validate github actions config
