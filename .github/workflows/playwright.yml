@@ -8,6 +8,11 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest # runner
+    strategy:
+      fail-fast: false
+      matrix:
+        shardIndex: [1, 2]
+        shardTotal: [2]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -24,7 +29,7 @@ jobs:
         run: npx playwright install --with-deps
       
       - name: Run Playwright test
-        run: npx playwright test
+        run: npx playwright test --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
         env:
           REQRES_API_KEY: ${{ secrets.REQRES_API_KEY }} # Already configured GitHub Secrets
           SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
@@ -34,6 +39,6 @@ jobs:
         uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
-          name: playwright-report
+          name: playwright-report-${{ matrix.shardIndex }}
           path: playwright-report/
           retention-days: 30

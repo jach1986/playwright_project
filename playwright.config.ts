@@ -41,7 +41,18 @@ export default defineConfig({
       testMatch: '**/*.setup.ts'      
     },
     {
+      name: 'api',
+      testMatch: '**/api.spec.ts',
+      use: {
+        baseURL: 'https://reqres.in',
+        extraHTTPHeaders: {
+          'x-api-key': process.env.REQRES_API_KEY ?? '',
+        },
+      },
+    },
+    {
       name: 'chromium',
+      testIgnore: '**/api.spec.ts',
       use: { 
         ...devices['Desktop Chrome'],
         launchOptions: {
@@ -54,6 +65,7 @@ export default defineConfig({
 
     {
       name: 'firefox',
+      testIgnore: '**/api.spec.ts',
       use: { 
         ...devices['Desktop Firefox'],
         launchOptions: {
@@ -66,6 +78,7 @@ export default defineConfig({
 
     {
       name: 'webkit',
+      testIgnore: '**/api.spec.ts',
       use: { 
         ...devices['Desktop Safari'],
         launchOptions: {
